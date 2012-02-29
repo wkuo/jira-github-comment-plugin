@@ -28,12 +28,11 @@ public class ConfigurationReader implements TransactionCallback<Configuration> {
     public Configuration doInTransaction() {
         try {
             PluginSettings settings = pluginSettingsFactory.createGlobalSettings();
-            String cropPrefix = (String) settings.get(CROP_PREFIX);
             String commentUserId = (String) settings.get(COMMENT_USER_ID);
             String secretKey = (String) settings.get(SECRET_KEY);
             String gitWebServer = (String) settings.get(GIT_WEB_SERVER);
             Boolean activate = Boolean.valueOf((String) settings.get(ACTIVATE));
-            return new Configuration(cropPrefix, commentUserId, secretKey, gitWebServer, activate);
+            return new Configuration(commentUserId, secretKey, gitWebServer, activate);
         } catch (MalformedURLException ex) {
             logger.warn("Url Malformed " + ex);
         }

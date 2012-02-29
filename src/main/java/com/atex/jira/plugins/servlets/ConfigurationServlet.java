@@ -2,7 +2,6 @@ package com.atex.jira.plugins.servlets;
 
 import static com.atex.jira.plugins.configs.Configuration.ACTIVATE;
 import static com.atex.jira.plugins.configs.Configuration.COMMENT_USER_ID;
-import static com.atex.jira.plugins.configs.Configuration.CROP_PREFIX;
 import static com.atex.jira.plugins.configs.Configuration.GIT_WEB_SERVER;
 import static com.atex.jira.plugins.configs.Configuration.SECRET_KEY;
 
@@ -74,7 +73,6 @@ public class ConfigurationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final String cropPrefix = req.getParameter("cropPrefix");
         final String commentUserId = req.getParameter("commentUserId");
         final String secretKey = req.getParameter("secretKey");
         final String gitWebServer = req.getParameter("gitWebServer");
@@ -92,7 +90,6 @@ public class ConfigurationServlet extends HttpServlet {
         Configuration configuration = null;
         try {
             configuration = new Configuration();
-            configuration.setCropPrefix(cropPrefix);
             configuration.setCommentUserId(commentUserId);
             configuration.setSecretKey(secretKey);
             if (gitWebServer!=null && !gitWebServer.trim().isEmpty()) {
@@ -116,7 +113,6 @@ public class ConfigurationServlet extends HttpServlet {
                 @Override
                 public Void doInTransaction() {
                     PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
-                    pluginSettings.put(CROP_PREFIX, cropPrefix);
                     pluginSettings.put(COMMENT_USER_ID, commentUserId);
                     pluginSettings.put(SECRET_KEY, secretKey);
                     pluginSettings.put(GIT_WEB_SERVER, gitWebServer);

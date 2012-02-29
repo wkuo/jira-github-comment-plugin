@@ -20,11 +20,6 @@
         #if($secretKey && $secretKey == 'error')<span class="error">$i18n.getText("github-commentor.admin.error.secretKey")</span>#end
       </div>
       <div>
-        <label for="cropPrefix">$i18n.getText("github-commentor.admin.cropPrefix")</label><br />
-        <input type="text" id="cropPrefix" name="cropPrefix" class="text" value="$!configuration.cropPrefix" >
-        #if($cropPrefix == 'error')<span class="error">$i18n.getText("github-commentor.admin.error.cropPrefix")</span>#end
-      </div>
-      <div>
         <label for="gitWebServer">$i18n.getText("github-commentor.admin.gitWebServer")</label><br />
         <input type="text" id="gitWebServer" name="gitWebServer" class="text" value="$!configuration.gitWebServer" />
         #if($gitWebServer == 'error')<span class="error">$i18n.getText("github-commentor.admin.error.gitWebServer")</span>#end

@@ -7,7 +7,6 @@ import org.apache.commons.httpclient.auth.AuthScope;
 
 public class Configuration {
 
-    private String cropPrefix;
     private String commentUserId;
     private String secretKey;
     private String gitWebServer;
@@ -15,7 +14,6 @@ public class Configuration {
     private URL gitWebURL;
     
     public static final String NAME_SPACE = Configuration.class.getName() + ".";
-    public static final String CROP_PREFIX = NAME_SPACE + "cropPrefix";
     public static final String COMMENT_USER_ID = NAME_SPACE + "commentUserId";
     public static final String SECRET_KEY = NAME_SPACE + "secretKey";
     public static final String GIT_WEB_SERVER = NAME_SPACE + "gitWebServer";
@@ -24,10 +22,9 @@ public class Configuration {
     public Configuration() {
     }
 
-    public Configuration(String cropPrefix, String commentUserId, 
+    public Configuration(String commentUserId, 
             String secretKey, String gitWebServer,
             boolean activate) throws MalformedURLException {
-        this.cropPrefix = cropPrefix;
         this.commentUserId = commentUserId;
         this.secretKey = secretKey;
         this.gitWebServer = gitWebServer;
@@ -39,12 +36,6 @@ public class Configuration {
         return new AuthScope(gitWebURL.getHost(), gitWebURL.getPort() == -1? 80: gitWebURL.getPort());
     }
     
-    public String getCropPrefix() {
-        return cropPrefix;
-    }
-    public void setCropPrefix(String cropPrefix) {
-        this.cropPrefix = cropPrefix;
-    }
     public String getCommentUserId() {
         return commentUserId;
     }

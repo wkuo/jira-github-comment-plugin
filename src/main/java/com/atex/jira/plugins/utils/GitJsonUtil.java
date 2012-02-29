@@ -40,8 +40,24 @@ public class GitJsonUtil {
     
     private JSONObject gitJson;
     
-    public GitJsonUtil(String jsonText, String cropPrefix) {
+    public GitJsonUtil(String jsonText) {
+        parseSetJsonObj(jsonText);
+    }
+
+    private void parseSetJsonObj(String jsonText) {
         JSONParser parser =  new JSONParser();
+        try {
+            String decoded = URLDecoder.decode(jsonText, ENCODING);
+            Object obj = parser.parse(decoded);
+            setGitJson((JSONObject) obj);
+        } catch (UnsupportedEncodingException e) {
+            logger.error("Please ensure the string is " + ENCODING + " encoding.\n" + e);
+        } catch (ParseException e) {
+            logger.error("Unable to parse the string to Json.\n" + e );
+        }        
+    }
+    
+    public GitJsonUtil(String jsonText, String cropPrefix) {
         int cropIndex = 0;
         try {
             String decoded = URLDecoder.decode(jsonText, ENCODING);
@@ -53,12 +69,9 @@ public class GitJsonUtil {
                 }
             }
             String cleanStr = decoded.substring(cropIndex);
-            Object obj = parser.parse(cleanStr);
-            setGitJson((JSONObject) obj);
+            parseSetJsonObj(cleanStr);
         } catch (UnsupportedEncodingException e) {
             logger.error("Please ensure the string is " + ENCODING + " encoding.\n" + e);
-        } catch (ParseException e) {
-            logger.error("Unable to parse the string to Json.\n" + e );
         }
     }
 

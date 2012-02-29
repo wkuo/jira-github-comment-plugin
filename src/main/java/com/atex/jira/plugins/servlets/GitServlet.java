@@ -49,7 +49,6 @@ public class GitServlet extends HttpServlet {
                 String param = req.getParameter(FIELD_PAYLOAD);
                 String signatureText = FIELD_PAYLOAD + "=" + SignatureUtil.encode(param);
                 String secretKey = configuration.getSecretKey();
-//                String cropPrefix = configuration.getCropPrefix();
                 String genSignature = SignatureUtil.calculateRFC2104HMAC(signatureText, secretKey);
                 // if failed to calculate key
                 if(genSignature != null && genSignature.isEmpty()) {
@@ -63,7 +62,7 @@ public class GitServlet extends HttpServlet {
                 }
                 List<Map<String, String>> commits = new ArrayList<Map<String, String>>();
                 if (recSignature.equals(genSignature)) {
-                    GitJsonUtil jsonUtil = new GitJsonUtil(param, "");
+                    GitJsonUtil jsonUtil = new GitJsonUtil(param);
                     commits = jsonUtil.getCommits();
                 } else {
                     LOGGER.warn("\nSignature " + recSignature + " mismatch.");
