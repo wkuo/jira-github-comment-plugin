@@ -36,8 +36,6 @@ public class ConfigurationReader implements TransactionCallback<Configuration> {
             return new Configuration(cropPrefix, commentUserId, secretKey, gitWebServer, activate);
         } catch (MalformedURLException ex) {
             logger.warn("Url Malformed " + ex);
-        } catch (Exception e) {
-            
         }
         return null;
     }

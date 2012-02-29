@@ -56,7 +56,7 @@ public class GitJsonUtil {
             Object obj = parser.parse(cleanStr);
             setGitJson((JSONObject) obj);
         } catch (UnsupportedEncodingException e) {
-            logger.error("Please ensure the string is " + ENCODING + "encoding.\n" + e);
+            logger.error("Please ensure the string is " + ENCODING + " encoding.\n" + e);
         } catch (ParseException e) {
             logger.error("Unable to parse the string to Json.\n" + e );
         }

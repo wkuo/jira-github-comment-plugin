@@ -1,13 +1,22 @@
 package com.atex.jira.plugins.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class SignatureUtil {
     private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(SignatureUtil.class);
 
     /**
     * Computes RFC 2104-compliant HMAC signature.
@@ -44,10 +53,24 @@ public class SignatureUtil {
                 resultSB.append(Character.forDigit((b & 15), 16));
             }       
             result = resultSB.toString();
-        } catch (Exception e) {
-            throw new SignatureException("Failed to generate HMAC : " + e.getMessage());
+        }  catch (InvalidKeyException e) {
+            throw new SignatureException("Failed to generate HMAC : " + e.getMessage(), e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new SignatureException("Failed to generate HMAC : " + e.getMessage(), e);
         }
         return result;
+    }
+    
+    public static final String encode(String raw) {
+        try {
+            return URLEncoder.encode(raw, "UTF-8").replace("+", "%20");            
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error(e.getMessage(), e);
+            return "";
+        } catch (NullPointerException e) {
+            LOGGER.warn(e.getMessage(), e);
+            return "";
+        }
     }
    
 }

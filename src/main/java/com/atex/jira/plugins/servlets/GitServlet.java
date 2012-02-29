@@ -1,10 +1,6 @@
 package com.atex.jira.plugins.servlets;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
 import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +27,7 @@ public class GitServlet extends HttpServlet {
      * 
      */
     private static final long serialVersionUID = 1L;
-    final Logger logger = LoggerFactory.getLogger(GitServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(GitServlet.class.getName());
     private static final String FIELD_SIGNATURE = "X-Hub-Signature";
     
     private transient final PluginSettingsFactory pluginSettingsFactory;
@@ -44,15 +40,19 @@ public class GitServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
         ConfigurationReader configurationReader = new ConfigurationReader(pluginSettingsFactory);
         Configuration configuration = transactionTemplate.execute(configurationReader);
         try {
             if (configuration.isActivate()) {
-                BufferedReader rd = new BufferedReader(new InputStreamReader(req.getInputStream(), Charset.forName("UTF-8")));
-                String text = readAll(rd).trim();
+                String text = "payload=" + SignatureUtil.encode(req.getParameter("payload"));
                 String secretKey = configuration.getSecretKey();
                 String cropPrefix = configuration.getCropPrefix();
                 String genSignature = SignatureUtil.calculateRFC2104HMAC(text, secretKey);
+                // if failed to calculate key
+                if(genSignature != null && genSignature.isEmpty()) {
+                    return;
+                }
                 String recSignature = "";
                 String signatureHeader = null;
                 signatureHeader = req.getHeader(FIELD_SIGNATURE);
@@ -71,18 +71,7 @@ public class GitServlet extends HttpServlet {
                 }
             }
         } catch (SignatureException e) {
-            logger.error("Signature Exception " + e);
+            LOGGER.error(e.getMessage(), e);
         }
-        super.doPost(req, resp);
     }
-    
-    private static String readAll(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-          sb.append((char) cp);
-        }
-        return sb.toString();
-      }
-
 }
