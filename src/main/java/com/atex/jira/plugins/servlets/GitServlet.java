@@ -29,6 +29,7 @@ public class GitServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = LoggerFactory.getLogger(GitServlet.class.getName());
     private static final String FIELD_SIGNATURE = "X-Hub-Signature";
+    private static final String FIELD_PAYLOAD = "payload";
     
     private transient final PluginSettingsFactory pluginSettingsFactory;
     private transient final TransactionTemplate transactionTemplate;
@@ -45,10 +46,11 @@ public class GitServlet extends HttpServlet {
         Configuration configuration = transactionTemplate.execute(configurationReader);
         try {
             if (configuration.isActivate()) {
-                String text = "payload=" + SignatureUtil.encode(req.getParameter("payload"));
+                String param = req.getParameter(FIELD_PAYLOAD);
+                String signatureText = FIELD_PAYLOAD + "=" + SignatureUtil.encode(param);
                 String secretKey = configuration.getSecretKey();
-                String cropPrefix = configuration.getCropPrefix();
-                String genSignature = SignatureUtil.calculateRFC2104HMAC(text, secretKey);
+//                String cropPrefix = configuration.getCropPrefix();
+                String genSignature = SignatureUtil.calculateRFC2104HMAC(signatureText, secretKey);
                 // if failed to calculate key
                 if(genSignature != null && genSignature.isEmpty()) {
                     return;
@@ -61,8 +63,11 @@ public class GitServlet extends HttpServlet {
                 }
                 List<Map<String, String>> commits = new ArrayList<Map<String, String>>();
                 if (recSignature.equals(genSignature)) {
-                    GitJsonUtil jsonUtil = new GitJsonUtil(text, cropPrefix);
+                    GitJsonUtil jsonUtil = new GitJsonUtil(param, "");
                     commits = jsonUtil.getCommits();
+                } else {
+                    LOGGER.warn("\nSignature " + recSignature + " mismatch.");
+                    LOGGER.warn("\nPayload :" + param);
                 }
     //            Add Comment to Jira
                 if (!commits.isEmpty()) {
