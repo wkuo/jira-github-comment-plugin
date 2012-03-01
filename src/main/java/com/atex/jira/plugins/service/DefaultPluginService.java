@@ -49,7 +49,7 @@ public class DefaultPluginService implements PluginService {
 
     @Override
     public void delete(String key) {
-        throw new UnsupportedOperationException();
+        transactionTemplate.execute(new DeleteProject(pluginSettingsFactory, key));
     }
 
 }
