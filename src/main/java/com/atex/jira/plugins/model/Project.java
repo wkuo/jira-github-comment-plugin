@@ -3,15 +3,18 @@
  */
 package com.atex.jira.plugins.model;
 
+import java.util.Hashtable;
 import java.util.Map;
 
 import org.springframework.util.Assert;
+
+import com.atex.jira.plugins.Constants;
 
 /**
  * @author pau
  *
  */
-public class Project extends AbstractModel {
+public class Project extends AbstractModel implements Constants {
     
     public static final String KEY = "key";
     public static final String TOPIC = "topic";
@@ -50,6 +53,15 @@ public class Project extends AbstractModel {
         this.active = getAsBoolean(ACTIVE);
     }
     
+    public Map<String, String> toMap() {
+        Map<String, String> map = new Hashtable<String, String>(5);
+        map.put(KEY, getKey());
+        map.put(TOPIC, getTopic());
+        map.put(SECERET_KEY, getSecretKey());
+        map.put(COMMENT_USER_ID, getCommetUserId());
+        map.put(ACTIVE, Boolean.toString(isActive()));
+        return map;
+    }
     
     @Override
     protected Map<String, String> getValues() {
@@ -116,6 +128,10 @@ public class Project extends AbstractModel {
      */
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getNameSpaceKey() {
+        return String.format(PROJECT_KEY_TEMPLATE, getKey());
     }
     
     

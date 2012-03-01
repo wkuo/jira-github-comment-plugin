@@ -3,7 +3,6 @@
  */
 package com.atex.jira.plugins.reader;
 
-import static com.atex.jira.plugins.reader.ProjectKeysReader.KEY;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -17,6 +16,7 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
+import com.atex.jira.plugins.Constants;
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 
@@ -24,7 +24,7 @@ import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
  * @author pau
  *
  */
-public class ProjectKeysReaderTest {
+public class ProjectKeysReaderTest implements Constants {
     
     @Mock PluginSettingsFactory pluginSettingsFactory;
     @Mock PluginSettings settings;
@@ -38,18 +38,18 @@ public class ProjectKeysReaderTest {
     
     @Test
     public void willNeverReturnNullSettingReturnNull() {
-        when(settings.get(KEY)).thenReturn(null);
+        when(settings.get(PROJECT_KEYS)).thenReturn(null);
         List<String> result = new ProjectKeysReader(pluginSettingsFactory).doInTransaction();
-        verify(settings, times(1)).get(KEY);
+        verify(settings, times(1)).get(PROJECT_KEYS);
         assertNotNull(result);
         assertEquals(0, result.size());
     }
     
     @Test
     public void willNeverReturnNullWhenSettingReturnEmptyList() {
-        when(settings.get(KEY)).thenReturn(new ArrayList<String>());
+        when(settings.get(PROJECT_KEYS)).thenReturn(new ArrayList<String>());
         List<String> result = new ProjectKeysReader(pluginSettingsFactory).doInTransaction();
-        verify(settings, times(1)).get(KEY);
+        verify(settings, times(1)).get(PROJECT_KEYS);
         assertNotNull(result);
         assertEquals(0, result.size());
     }
@@ -58,9 +58,9 @@ public class ProjectKeysReaderTest {
     public void willReturnCorrectProjectKeysWhenThereAreSettingInPlugin() {
         List<String> test = new ArrayList<String>();
         test.add("PLUGIN");
-        when(settings.get(KEY)).thenReturn(test);
+        when(settings.get(PROJECT_KEYS)).thenReturn(test);
         List<String> result = new ProjectKeysReader(pluginSettingsFactory).doInTransaction();
-        verify(settings, times(1)).get(KEY);
+        verify(settings, times(1)).get(PROJECT_KEYS);
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals("PLUGIN", result.get(0));

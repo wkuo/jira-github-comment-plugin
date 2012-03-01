@@ -9,6 +9,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atex.jira.plugins.Constants;
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.atlassian.sal.api.transaction.TransactionCallback;
@@ -17,12 +18,11 @@ import com.atlassian.sal.api.transaction.TransactionCallback;
  * @author pau
  *
  */
-public class ProjectKeysReader implements TransactionCallback<List<String>> {
+public class ProjectKeysReader implements TransactionCallback<List<String>>, Constants {
     
     private final Logger LOGGER = LoggerFactory.getLogger(ProjectKeysReader.class);
     
     private final PluginSettingsFactory pluginSettingsFactory;
-    public final static String KEY = "";
     
     
     
@@ -35,7 +35,7 @@ public class ProjectKeysReader implements TransactionCallback<List<String>> {
     public List<String> doInTransaction() {
         List<String> keys = null;
         PluginSettings settings = pluginSettingsFactory.createGlobalSettings();
-        Object result = settings.get(KEY);
+        Object result = settings.get(PROJECT_KEYS);
         if(result instanceof List) {
             keys = (List<String>) result;
         } else {
