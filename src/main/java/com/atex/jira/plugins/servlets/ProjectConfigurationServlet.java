@@ -1,6 +1,7 @@
 package com.atex.jira.plugins.servlets;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,13 +44,14 @@ public class ProjectConfigurationServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = userManager.getRemoteUsername(req);
-//        if (username != null && !userManager.isSystemAdmin(username)) {
-//            redirectToMain(req, resp);
-//            return;
-//        } else if (username==null) {
-//            redirectToLogin(req, resp);
-//            return;            
-//        }
+        if (username != null && !userManager.isSystemAdmin(username)) {
+            redirectToMain(req, resp);
+            return;
+        } else if (username==null) {
+            redirectToLogin(req, resp);
+            return;            
+        }
+        
         String projectKey = req.getParameter("project");
         if (projectKey==null) {
             return;
@@ -60,9 +62,25 @@ public class ProjectConfigurationServlet extends HttpServlet{
         models.put("configuration", configuration);
         resp.setContentType(CONTENT_TYPE);
         renderer.render(VIEW, models, resp.getWriter());        
-//        resp.getOutputStream().write("Hello".getBytes());
+
         
     }
     
-
+    private void redirectToMain(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.sendRedirect(loginUriProvider.getLoginUri(URI.create("")).toASCIIString());
+    }
+   
+    private void redirectToLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.sendRedirect(loginUriProvider.getLoginUri(getUri(req)).toASCIIString());
+    }
+    
+    private URI getUri(HttpServletRequest req) {
+        StringBuffer builder = req.getRequestURL();
+        if (req.getQueryString() != null) {
+            builder.append("?");
+            builder.append(req.getQueryString());
+        }
+        return URI.create(builder.toString());
+    }    
+    
 }
