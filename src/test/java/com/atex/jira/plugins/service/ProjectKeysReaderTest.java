@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atex.jira.plugins.reader;
+package com.atex.jira.plugins.service;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;

@@ -12,7 +12,7 @@ import com.atlassian.sal.api.transaction.TransactionCallback;
  * @author pau
  *
  */
-public class ProjectWriter implements TransactionCallback<Void> {
+class ProjectWriter implements TransactionCallback<Void> {
 
     private final PluginSettingsFactory pluginSettingsFactory;
     private final Project project;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atex.jira.plugins.reader;
+package com.atex.jira.plugins.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.atlassian.sal.api.transaction.TransactionCallback;
  * @author pau
  *
  */
-public class ProjectKeysReader implements TransactionCallback<List<String>>, Constants {
+class ProjectKeysReader implements TransactionCallback<List<String>>, Constants {
     
     private final Logger LOGGER = LoggerFactory.getLogger(ProjectKeysReader.class);
     

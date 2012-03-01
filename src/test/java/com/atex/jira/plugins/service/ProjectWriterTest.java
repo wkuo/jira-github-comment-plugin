@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atex.jira.plugins.writer;
+package com.atex.jira.plugins.service;
 
 import static org.mockito.Mockito.*;
 
@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.atex.jira.plugins.model.Project;
-import com.atex.jira.plugins.reader.ProjectReader;
+import com.atex.jira.plugins.service.ProjectReader;
 import com.atex.jira.plugins.service.ProjectWriter;
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
