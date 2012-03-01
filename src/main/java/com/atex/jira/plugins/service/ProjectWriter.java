@@ -1,9 +1,8 @@
 /**
  * 
  */
-package com.atex.jira.plugins.reader;
+package com.atex.jira.plugins.service;
 
-import com.atex.jira.plugins.Constants;
 import com.atex.jira.plugins.model.Project;
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
@@ -13,22 +12,20 @@ import com.atlassian.sal.api.transaction.TransactionCallback;
  * @author pau
  *
  */
-public class ProjectReader implements TransactionCallback<Project>, Constants {
+public class ProjectWriter implements TransactionCallback<Void> {
 
     private final PluginSettingsFactory pluginSettingsFactory;
-    private final String key;
-
+    private final Project project;
     
-    public ProjectReader(PluginSettingsFactory pluginSettingsFactory, String key) {
+    public ProjectWriter(final PluginSettingsFactory pluginSettingsFactory, final Project project) {
         this.pluginSettingsFactory = pluginSettingsFactory;
-        this.key = key;
+        this.project = project;
     }
-    
-    
     @Override
-    public Project doInTransaction() {
+    public Void doInTransaction() {
         PluginSettings settings = pluginSettingsFactory.createGlobalSettings();
-        return new Project(settings.get(String.format(PROJECT_KEY_TEMPLATE, key)));
+        settings.put(project.getNameSpaceKey(), project.toMap());
+        return null;
     }
 
 }
