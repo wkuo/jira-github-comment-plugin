@@ -13,6 +13,13 @@
     <servlet key="configuration-servlet" class="com.atex.jira.plugins.servlets.ConfigurationServlet">
       <url-pattern>/githubcomment/configure</url-pattern>
     </servlet>
+    <servlet key="project-configuration-servlet" class="com.atex.jira.plugins.servlets.ProjectConfigurationServlet">
+		<url-pattern>/githubcomment/projectconfigure</url-pattern>
+    </servlet>
+    <!--servlet-filter key="project-configuration-servlet-filter" class="com.atex.jira.plugins.servlets.ProjectConfigurationServletFilter" >
+		<url-pattern>/plugins/servlet/project-config/*</url-pattern>
+		<param name="">REQUEST</param>
+    </servlet-filter-->
 	<resource type="i18n" name="i18n" location="languages/languages_en_GB" />
     <component-import key="renderer" interface="com.atlassian.templaterenderer.velocity.one.six.VelocityTemplateRenderer" />
     <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager" />
@@ -23,5 +30,14 @@
     <web-resource name="Admin Web Resources" key="resources">
       <dependency>com.atlassian.auiplugin:ajs</dependency>
       <resource type="download" name="config.css" location="config.css"/>
-    </web-resource>    
+    </web-resource>
+    
+    <web-section key="githubprojectgroup1" location="atl.jira.proj.config" >
+	</web-section>
+    <web-item key="githubcommentprojectconfig" name="Test Web Item" section="atl.jira.proj.config/githubprojectgroup1"  weight="15">
+    	<label key="github-commentor.projectconfig.menu.label" ><param name="param0">$helper.project.name</param></label>
+    	<link linkId="githubcommentprojectconfig">/plugins/servlet/githubcomment/projectconfigure?project=${projectKeyEncoded}</link>
+    </web-item>
+    
+      
 </atlassian-plugin>
