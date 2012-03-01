@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atex.jira.plugins.reader;
+package com.atex.jira.plugins.service;
 
 import com.atex.jira.plugins.Constants;
 import com.atex.jira.plugins.model.Project;
@@ -13,7 +13,7 @@ import com.atlassian.sal.api.transaction.TransactionCallback;
  * @author pau
  *
  */
-public class ProjectReader implements TransactionCallback<Project>, Constants {
+class ProjectReader implements TransactionCallback<Project>, Constants {
 
     private final PluginSettingsFactory pluginSettingsFactory;
     private final String key;

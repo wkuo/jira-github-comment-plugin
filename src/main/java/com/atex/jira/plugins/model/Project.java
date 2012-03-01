@@ -129,10 +129,5 @@ public class Project extends AbstractModel implements Constants {
     public void setActive(boolean active) {
         this.active = active;
     }
-
-    public String getNameSpaceKey() {
-        return String.format(PROJECT_KEY_TEMPLATE, getKey());
-    }
-    
     
 }

@@ -1,9 +1,8 @@
 /**
  * 
  */
-package com.atex.jira.plugins.reader;
+package com.atex.jira.plugins.service;
 
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 

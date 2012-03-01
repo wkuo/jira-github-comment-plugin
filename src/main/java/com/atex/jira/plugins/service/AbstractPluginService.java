@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atex.jira.plugins.reader;
+package com.atex.jira.plugins.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,29 +12,27 @@ import org.slf4j.LoggerFactory;
 import com.atex.jira.plugins.Constants;
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
-import com.atlassian.sal.api.transaction.TransactionCallback;
 
 /**
+ * A base class for common methods for this plugin in interaction with <code>PluginSettings</code>
  * @author pau
  *
  */
-public class ProjectKeysReader implements TransactionCallback<List<String>>, Constants {
-    
-    private final Logger LOGGER = LoggerFactory.getLogger(ProjectKeysReader.class);
-    
-    private final PluginSettingsFactory pluginSettingsFactory;
+abstract class AbstractPluginService implements Constants {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPluginService.class);
     
     
+    protected abstract PluginSettingsFactory getPluginSettingsFactory();
     
-    public ProjectKeysReader(final PluginSettingsFactory pluginSettingsFactory) {
-        this.pluginSettingsFactory = pluginSettingsFactory;
-    }
     
+    /**
+     * Get list of project keys
+     * @return project keys, null safe
+     */
     @SuppressWarnings("unchecked")
-    @Override
-    public List<String> doInTransaction() {
+    protected List<String> getProjectKeys() {
         List<String> keys = null;
-        PluginSettings settings = pluginSettingsFactory.createGlobalSettings();
+        PluginSettings settings = getPluginSettingsFactory().createGlobalSettings();
         Object result = settings.get(PROJECT_KEYS);
         if(result instanceof List) {
             keys = (List<String>) result;
