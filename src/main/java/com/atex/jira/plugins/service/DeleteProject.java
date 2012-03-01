@@ -23,7 +23,7 @@ class DeleteProject extends AbstractPluginService implements TransactionCallback
     
     private static final Logger LOGGER = LoggerFactory.getLogger(DeleteProject.class);
     
-    public DeleteProject(final PluginSettingsFactory pluginSettingsFactory, String key) {
+    DeleteProject(final PluginSettingsFactory pluginSettingsFactory, String key) {
         this.pluginSettingsFactory = pluginSettingsFactory;
         this.key = key;
     }

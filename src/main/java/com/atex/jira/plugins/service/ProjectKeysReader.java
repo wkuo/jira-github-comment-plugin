@@ -19,7 +19,7 @@ class ProjectKeysReader extends AbstractPluginService implements TransactionCall
     
     
     
-    public ProjectKeysReader(final PluginSettingsFactory pluginSettingsFactory) {
+    ProjectKeysReader(final PluginSettingsFactory pluginSettingsFactory) {
         this.pluginSettingsFactory = pluginSettingsFactory;
     }
     

@@ -19,7 +19,7 @@ class ProjectReader implements TransactionCallback<Project>, Constants {
     private final String key;
 
     
-    public ProjectReader(PluginSettingsFactory pluginSettingsFactory, String key) {
+    ProjectReader(PluginSettingsFactory pluginSettingsFactory, String key) {
         this.pluginSettingsFactory = pluginSettingsFactory;
         this.key = key;
     }

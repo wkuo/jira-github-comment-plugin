@@ -19,7 +19,7 @@ class ProjectWriter extends AbstractPluginService implements TransactionCallback
     private final PluginSettingsFactory pluginSettingsFactory;
     private final Project project;
     
-    public ProjectWriter(final PluginSettingsFactory pluginSettingsFactory, final Project project) {
+    ProjectWriter(final PluginSettingsFactory pluginSettingsFactory, final Project project) {
         this.pluginSettingsFactory = pluginSettingsFactory;
         this.project = project;
     }
