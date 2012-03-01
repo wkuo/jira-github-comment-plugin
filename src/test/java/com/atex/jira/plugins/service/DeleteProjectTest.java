@@ -13,7 +13,6 @@ import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
 import com.atex.jira.plugins.Constants;
-import com.atlassian.crowd.acceptance.tests.applications.crowd.performance.VeryLargeCsvImporterTest;
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 
@@ -51,7 +50,7 @@ public class DeleteProjectTest implements Constants {
         when(settings.get(PROJECT_KEYS)).thenReturn(keys);
         new DeleteProject(pluginSettingsFactory, "PLUGIN").doInTransaction();
         verify(settings).put(PROJECT_KEYS, new ArrayList<String>());
-        verify(settings, times(2)).put(anyString(), any());
+        verify(settings).put(String.format(PROJECT_KEY_TEMPLATE, "PLUGIN"), null);
     }
 
 }
