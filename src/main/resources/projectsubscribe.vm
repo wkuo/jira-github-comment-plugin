@@ -1,39 +1,48 @@
 <html>
   <head>
+    <title>$i18n.getText("github-commentor.projectconfig.menu.label")</title>
   	<meta name="admin.active.section" content="atl.jira.proj.config"/>
   	<meta name="admin.active.tab" content="githubcommentprojectconfig"/>
-    <title>$i18n.getText("github-commentor.projectconfig.menu.label")</title>
-    <!--meta name="decorator" content="atl.admin" />
-    <meta name="application-base-url" content="$applicationProperties.getBaseUrl()"-->
+  	<!--meta name="decorator" content="admin.active.tab"/-->
+  	<!--meta name="decorator" content="atl.jira.proj.config"/-->
+    <meta name="decorator" content="atl.admin" />
+    <meta name="application-base-url" content="$applicationProperties.getBaseUrl()">
     $webResourceManager.requireResource("com.atex.jira.plugins.jira-github-comment-plugin:resources")
+	<script src="/js/subscribe.js"></script>
   </head>
   <body>
+
+
   <div>
     #if($success && $success == 'success')<span class="success" style="font-size: 1.2em;">$i18n.getText("github-commentor.projectconfig.success")</span>#end
     <form id="projectsubscribe" class="aui" method="POST">
       <div>
-        <label for="hub.topic">$i18n.getText("github-commentor.projectconfig.topic")</label><br />
-        <input type="text" id="hub.topic" name="hub.topic" class="text" value="$!projectconfig.topic" >
-        #if($hub.topic && $hub.topic == 'error')<span class="error">$i18n.getText("github-commentor.projectconfig.error.topic")</span>#end
+        <label for="topic">$i18n.getText("github-commentor.projectconfig.topic")</label><br />
+        <input type="text" id="topic" name="topic" class="text" value="$!projectconfig.topic" >
+        #if($topic && $topic == 'error')<span class="error">$i18n.getText("github-commentor.projectconfig.error.topic")</span>#end
+        <span id="topic" class="error">$i18n.getText("github-commentor.projectconfig.error.topic")</span>
       </div>
       <div>
-      	<input type="radio" id="hub.mode" name="hub.mode" value="subcribe" >
+      	<input type="radio" id="mode" name="mode" value="subcribe" >
       	$i18n.getText("github-commentor.projectconfig.subscribe")
       	</input>
-      	<input type="radio" id="hub.mode" name="hub.mode" value="unsubscribe" >
+      	<input type="radio" id="mode" name="mode" value="unsubscribe" >
       	$i18n.getText("github-commentor.projectconfig.unsubscribe")
       	</input>
+      	<span id="mode" class="error">$i18n.getText("github-commentor.projectconfig.error.mode")</span>
       </div>
       <div>
-        <label for="hub.secret">$i18n.getText("github-commentor.projectconfig.secretkey")</label><br />
-        <input type="text" id="hub.secret" name="hub.secret" class="text" value="$!projectconfig.secretKey" />
-        #if($hub.secret && $hub.secret == 'error')<span class="error">$i18n.getText("github-commentor.projectconfig.error.secretkey")</span>#end
+        <label for="secret">$i18n.getText("github-commentor.projectconfig.secretkey")</label><br />
+        <input type="text" id="secret" name="secret" class="text" value="$!projectconfig.secretKey" />
+        #if($secret && $secret == 'error')<span class="error">$i18n.getText("github-commentor.projectconfig.error.secretkey")</span>#end
+        <span id="secret" class="error">$i18n.getText("github-commentor.projectconfig.error.secretkey")</span>
       </div>
       <div>
-		<input name="hub.callback" type="hidden"  value="$callback" />
+      	<input name="projectKey" type="text" value="$projectKey" />
+		<input name="callback" type="text" value="$callback" />
       </div>
       <div>
-        <input type="submit" value="$i18n.getText("github-commentor.projectconfig.subscribe")" class="button">
+        <input type="submit" value="$i18n.getText("github-commentor.projectconfig.subscribe.button")" class="button">
       </div>
     </form>
     </div>
