@@ -40,10 +40,10 @@
     
     <web-section key="githubprojectgroup1" location="atl.jira.proj.config" >
 	</web-section>
-    <web-item key="githubcommentprojectconfig" section="atl.jira.proj.config/githubprojectgroup1"  weight="15">
+    <!--web-item key="githubcommentprojectconfig" section="atl.jira.proj.config/githubprojectgroup1"  weight="15">
     	<label key="github-commentor.projectconfig.menu.label" ><param name="param0">$helper.project.name</param></label>
     	<link linkId="githubcommentprojectconfig">/plugins/servlet/githubcomment/projectconfigure?project=${projectKeyEncoded}</link>
-    </web-item>
+    </web-item-->
     <web-item key="githubcommentprojectsubscribe" section="atl.jira.proj.config/githubprojectgroup1"  weight="15">
     	<label key="github-commentor.projectsubscribe.menu.label" ><param name="param0">$helper.project.name</param></label>
     	<link linkId="githubcommentprojectsubscribe">/plugins/servlet/githubcomment/projectsubscribe?project=${projectKeyEncoded}</link>

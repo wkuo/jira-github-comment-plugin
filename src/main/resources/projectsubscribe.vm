@@ -14,11 +14,21 @@
 
 
   <div>
+  	<div>$i18n.getText("github-commentor.projectconfig.menu.label") for $!projectKey
+  	</div>
     #if($success && $success == 'success')<span class="success" style="font-size: 1.2em;">$i18n.getText("github-commentor.projectconfig.success")</span>#end
     <form id="projectsubscribe" class="aui" method="POST">
       <div>
-        <input id="username" type="text" />
-        <input id="password" type="password" />
+        <label for="username">$i18n.getText("github-commentor.projectconfig.gituser")</label><br />
+        <input id="username" name="username" type="text" />
+        <span id="username" class="error">$i18n.getText("github-commentor.projectconfig.error.gituser")</span>
+      </div>
+      <div>
+        <label for="password">$i18n.getText("github-commentor.projectconfig.gitpass")</label><br />
+        <input id="password" name="password" type="password" />
+        <span id="password" class="error">$i18n.getText("github-commentor.projectconfig.error.gitpass")</span>
+      </div>
+      <div>
         <label for="topic">$i18n.getText("github-commentor.projectconfig.topic")</label><br />
         <input type="text" id="topic" name="topic" class="text" value="$!projectconfig.topic" >
         #if($topic && $topic == 'error')<span class="error">$i18n.getText("github-commentor.projectconfig.error.topic")</span>#end
@@ -46,7 +56,7 @@
         <span id="commentUserId" class="error">$i18n.getText("github-commentor.projectconfig.error.commentUserId")</span>
       </div>
       <div>
-      	<input name="projectKey" type="text" value="$projectKey" />
+      	<input name="projectKey" type="hidden" value="$projectKey" />
 		<input name="callback" type="text" value="$callback" />
       </div>
       <div>
