@@ -31,7 +31,9 @@ public class Project extends AbstractModel implements Constants {
     private boolean active;
     
     
-    
+    public Project() {
+        
+    }
     public Project(Map<String, String> values) {
         Assert.notNull(values, "parameter 'values' must not null");
         init(values);

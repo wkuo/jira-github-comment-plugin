@@ -37,7 +37,7 @@ public class ConfigurationServlet extends HttpServlet {
      * 
      */
     private static final long serialVersionUID = 3132823194905563507L;
-    private static final String CONTENT_TYPE = "text/html;charset=utf-8";
+    public static final String CONTENT_TYPE = "text/html;charset=utf-8";
     private static final String VIEW = "configure.vm";
     
     private transient final UserManager userManager;
@@ -55,7 +55,7 @@ public class ConfigurationServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = userManager.getRemoteUsername(req);
         if (username != null && !userManager.isSystemAdmin(username)) {
             redirectToMain(req, resp);
@@ -72,7 +72,7 @@ public class ConfigurationServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final String commentUserId = req.getParameter("commentUserId");
         final String secretKey = req.getParameter("secretKey");
         final String gitWebServer = req.getParameter("gitWebServer");

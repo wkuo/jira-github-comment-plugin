@@ -24,22 +24,17 @@ AJS.toInit(function() {
 	      } 		
 	      if ('undefined' != typeof(mode) && mode == "") {
 	    	  AJS.$("span#mode").show();
-	    	  AJS.$("input#mode").focus();  
 	    	  return false;  
 	      } 		
 		
-	    var dataString = 'hub.topic='+ topic + '&hub.mode=' + mode + '&hub.callback=' + callback + '&hub.secret=' + secret;  
-	    //alert (dataString);return false;  
+		    var dataString = 'hub.topic='+ topic + '&hub.mode=' + mode + '&hub.callback=' + callback + '&hub.secret=' + secret;  
 	    AJS.$.ajax({  
 	      type: "POST",  
 	      url: "https://api.github.com/hub",  
-	      data: dataString
+	      data: dataString,
+	      username: AJS.$("#username"),
+	      password: AJS.$("#password")
 	    });  
-	    AJS.$.ajax({  
-	      type: "POST",  
-	      url: "/githubcomment/projectsubscribe?project="+projectKey,  
-	      data: dataString  
-	    });  
-		return false;
+		return true;
 	});
 });	
